@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohit Sharma — Full-Stack Developer & Security Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,500;1,400;1,500;1,600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0e;
+    --surface: #14171a;
+    --surface-2: #1b1f23;
+    --ink: #e9e7e0;
+    --ink-soft: #9ea3a6;
+    --ink-dim: #63686b;
+    --line: #24292d;
+    --amber: #dba463;
+    --moss: #7fa08e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 26px; }
+
+  ::selection { background: var(--amber); color: #0a0c0e; }
+
+  /* ---------- HEADER ---------- */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(10, 12, 14, 0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+  }
+
+  .logo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .logo .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 1em;
+    background: var(--amber);
+    margin-left: 2px;
+    vertical-align: -2px;
+    animation: blink 1.1s steps(1) infinite;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  nav ul { list-style: none; display: flex; gap: 26px; }
+
+  nav a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    transition: color 0.2s;
+  }
+
+  nav a:hover, nav a:focus-visible { color: var(--amber); }
+
+  /* ---------- HERO ---------- */
+  .hero { padding: 84px 0 46px; }
+
+  .status-line {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--moss);
+    letter-spacing: 0.03em;
+    margin-bottom: 26px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .status-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--moss);
+    box-shadow: 0 0 8px var(--moss);
+  }
+
+  .hero h1 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.3rem, 5.6vw, 3.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+    max-width: 760px;
+  }
+
+  .hero h1 em {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--amber);
+  }
+
+  .hero-sub {
+    font-size: 1.06rem;
+    color: var(--ink-soft);
+    max-width: 560px;
+    margin-bottom: 34px;
+  }
+
+  .hero-sub strong { color: var(--ink); font-weight: 600; }
+
+  .hero-links { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 46px; }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 18px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 500;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    transition: all 0.2s ease;
+  }
+
+  .pill.fill { background: var(--amber); border-color: var(--amber); color: #0a0c0e; font-weight: 600; }
+  .pill:hover { border-color: var(--amber); color: var(--amber); transform: translateY(-1px); }
+  .pill.fill:hover { color: #0a0c0e; opacity: 0.9; }
+
+  /* ---------- CONSOLE (signature element) ---------- */
+  .console {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .console-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface-2);
+  }
+
+  .console-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--ink-dim); }
+
+  .console-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ink-dim);
+    margin-left: 6px;
+  }
+
+  .console-body {
+    padding: 16px 18px 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    min-height: 118px;
+  }
+
+  .console-body .line { color: var(--ink-soft); margin-bottom: 7px; opacity: 0; animation: reveal 0.4s ease forwards; }
+  .console-body .line .ok { color: var(--moss); }
+  .console-body .line .tag { color: var(--amber); }
+  .console-body .line:nth-child(1) { animation-delay: 0.1s; }
+  .console-body .line:nth-child(2) { animation-delay: 0.5s; }
+  .console-body .line:nth-child(3) { animation-delay: 0.9s; }
+  .console-body .line:nth-child(4) { animation-delay: 1.3s; }
+  .console-body .line:nth-child(5) { animation-delay: 1.7s; }
+
+  @keyframes reveal { to { opacity: 1; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .console-body .line { opacity: 1; animation: none; }
+    .logo .cursor { animation: none; }
+  }
+
+  /* ---------- SECTION GENERIC ---------- */
+  section.block { padding: 60px 0; border-top: 1px solid var(--line); }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--ink-dim);
+    margin-bottom: 8px;
+  }
+
+  .section-label span { color: var(--amber); }
+
+  section.block h2 {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.7rem;
+    margin-bottom: 36px;
+  }
+
+  /* ---------- PROJECTS ---------- */
+  .project {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 26px 28px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s ease;
+  }
+
+  .project:hover { border-color: #3a4247; }
+
+  .project-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .project h3 { font-size: 1.12rem; font-weight: 600; }
+
+  .project-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--moss);
+    border: 1px solid #2a3630;
+    padding: 4px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .project p { color: var(--ink-soft); font-size: 0.93rem; margin-bottom: 16px; max-width: 600px; }
+
+  .stack-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+
+  .stack-chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ink-dim);
+    border: 1px solid var(--line);
+    padding: 3px 9px;
+    border-radius: 3px;
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--amber);
+    text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 0.82rem;
+    border-bottom: 1px solid transparent;
+  }
+
+  .project-link:hover { border-color: var(--amber); }
+
+  .project-note {
+    font-size: 0.82rem;
+    color: var(--ink-dim);
+    border-top: 1px dashed var(--line);
+    margin-top: 4px;
+    padding-top: 12px;
+  }
+
+  .more-row { text-align: center; margin-top: 22px; }
+
+  /* ---------- SKILLS ---------- */
+  .skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+
+  .skill-group h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--amber);
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  .skill-group ul { list-style: none; }
+
+  .skill-group li {
+    color: var(--ink-soft);
+    font-size: 0.93rem;
+    padding: 5px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  .skill-group li:last-child { border-bottom: none; }
+
+  /* ---------- EDUCATION ---------- */
+  .edu-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 28px;
+  }
+
+  .edu-card h3 { font-size: 1.08rem; font-weight: 600; margin-bottom: 4px; }
+  .edu-card .org { color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 4px; }
+  .edu-card .dates { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--ink-dim); }
+
+  /* ---------- FOOTER / CONTACT ---------- */
+  footer { padding: 70px 0 50px; border-top: 1px solid var(--line); }
+
+  footer h2 {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.8rem, 4.4vw, 2.6rem);
+    margin-bottom: 16px;
+  }
+
+  footer h2 em { color: var(--amber); }
+
+  footer p { color: var(--ink-soft); margin-bottom: 30px; max-width: 480px; }
+
+  .footer-links { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 50px; }
+
+  .footer-bottom {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    color: var(--ink-dim);
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 680px) {
+    .skill-grid { grid-template-columns: 1fr; }
+    nav ul { gap: 14px; }
+    nav a { font-size: 0.74rem; }
+  }
+
+  a:focus-visible, .pill:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 3px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-inner">
+    <div class="logo">mohit.sh<span class="cursor"></span></div>
+    <nav>
+      <ul>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <div class="status-line"><span class="status-dot"></span>final-year b.tech · open to sde &amp; security roles</div>
+    <h1>I build systems, then I <em>try to break them</em> before someone else does.</h1>
+    <p class="hero-sub">
+      Mohit Sharma — full-stack developer with a focus on offensive security. I ship
+      working products end to end and spend the rest of my time figuring out how
+      software fails, so the things I build don't.
+    </p>
+    <div class="hero-links">
+      <a class="pill fill" href="https://github.com/index-oss" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="pill" href="mailto:infosec.mohitsharma@gmail.com">Email me</a>
+      <a class="pill" href="#" data-placeholder="linkedin">LinkedIn ↗</a>
+      <a class="pill" href="#" data-placeholder="resume">Resume (PDF) ↓</a>
+    </div>
+
+    <div class="console">
+      <div class="console-bar">
+        <span class="console-dot"></span><span class="console-dot"></span><span class="console-dot"></span>
+        <span class="console-title">~/mohit — status</span>
+      </div>
+      <div class="console-body">
+        <div class="line"><span class="tag">[build]</span> full-stack apps, shipped and running</div>
+        <div class="line"><span class="ok">[ok]</span> log monitoring &amp; auto-recovery agent — live</div>
+        <div class="line"><span class="tag">[recon]</span> bug-hunting pipeline — recon → exploit → report</div>
+        <div class="line"><span class="ok">[ok]</span> AI-assisted tools shipped for real users, not demos</div>
+        <div class="line"><span class="tag">[status]</span> currently: final year, JC Bose University (YMCA)</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block wrap" id="work">
+    <div class="section-label"><span>//</span> selected work</div>
+    <h2>What I've shipped</h2>
+
+    <div class="project">
+      <div class="project-top">
+        <h3>Self-Heal-AI</h3>
+        <span class="project-tag">security · automation</span>
+      </div>
+      <p>
+        An AI-assisted self-healing agent for servers — watches logs, flags anomalies,
+        blocks malicious IPs automatically, restarts failed services, and alerts over
+        Telegram/Discord. Built to close the gap between "detected" and "fixed."
+      </p>
+      <div class="stack-row">
+        <span class="stack-chip">Python</span>
+        <span class="stack-chip">Log analysis</span>
+        <span class="stack-chip">Automation</span>
+      </div>
+      <a class="project-link" href="https://github.com/index-oss/Self-Heal-Ai" target="_blank" rel="noopener">View on GitHub →</a>
+    </div>
+
+    <div class="project">
+      <div class="project-top">
+        <h3>Exbow-Offensive</h3>
+        <span class="project-tag">offensive security research</span>
+      </div>
+      <p>
+        A recon-to-report automation pipeline for ethical hacking workflows —
+        reconnaissance, analysis, and exploitation testing against consenting,
+        authorized targets, with structured reporting for write-ups and CTFs.
+      </p>
+      <div class="stack-row">
+        <span class="stack-chip">Python</span>
+        <span class="stack-chip">Recon automation</span>
+        <span class="stack-chip">Reporting</span>
+      </div>
+      <a class="project-link" href="https://github.com/index-oss/Exbow-Offensive" target="_blank" rel="noopener">View on GitHub →</a>
+      <div class="project-note">Built for authorized testing and CTF environments only.</div>
+    </div>
+
+    <div class="project">
+      <div class="project-top">
+        <h3>ExamCraft</h3>
+        <span class="project-tag">AI tool</span>
+      </div>
+      <p>
+        A marks-aware answer sheet generator for university students — reads a question
+        paper, scales responses to the marks allotted, walks through maths step by step,
+        and exports a properly formatted A4 PDF. Single-file, no backend required.
+      </p>
+      <div class="stack-row">
+        <span class="stack-chip">Tailwind CSS</span>
+        <span class="stack-chip">PDF.js / jsPDF</span>
+        <span class="stack-chip">Tesseract.js</span>
+        <span class="stack-chip">GPT-4o-mini</span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-top">
+        <h3>Quiz-Master Pro</h3>
+        <span class="project-tag">real-time · multiplayer</span>
+      </div>
+      <p>
+        A multiplayer quiz game with a live leaderboard, AI-generated explanations for
+        wrong answers, and gamified badges to keep people coming back.
+      </p>
+      <div class="stack-row">
+        <span class="stack-chip">React</span>
+        <span class="stack-chip">Supabase</span>
+        <span class="stack-chip">Realtime</span>
+      </div>
+      <a class="project-link" href="https://github.com/index-oss/Quiz-Master_Pro" target="_blank" rel="noopener">View on GitHub →</a>
+    </div>
+
+    <div class="more-row">
+      <a class="pill" href="https://github.com/index-oss" target="_blank" rel="noopener">See everything else on GitHub ↗</a>
+    </div>
+  </section>
+
+  <section class="block wrap" id="skills">
+    <div class="section-label"><span>//</span> stack</div>
+    <h2>What I work with</h2>
+    <div class="skill-grid">
+      <div class="skill-group">
+        <h4>LANGUAGES</h4>
+        <ul>
+          <li>Python</li>
+          <li>C</li>
+          <li>JavaScript</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>WEB &amp; TOOLS</h4>
+        <ul>
+          <li>Tailwind CSS · React</li>
+          <li>Supabase</li>
+          <li>Git / GitHub</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>SECURITY</h4>
+        <ul>
+          <li>Recon &amp; enumeration automation</li>
+          <li>Log-based anomaly detection</li>
+          <li>CTF-style exploitation practice</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>AI / ML APPLIED</h4>
+        <ul>
+          <li>LLM-integrated tooling (GPT-4o family)</li>
+          <li>OCR &amp; document pipelines</li>
+          <li>Practical, product-shaped AI features</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block wrap" id="education">
+    <div class="section-label"><span>//</span> education</div>
+    <h2>Background</h2>
+    <div class="edu-card">
+      <h3>B.Tech, Computer Engineering</h3>
+      <div class="org">JC Bose University of Science &amp; Technology (YMCA), Faridabad</div>
+      <div class="dates">Final year</div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Let's talk about <em>what you're building.</em></h2>
+    <p>Open to SDE and security-focused roles — full-stack, backend, or offensive security.</p>
+    <div class="footer-links">
+      <a class="pill fill" href="mailto:infosec.mohitsharma@gmail.com">infosec.mohitsharma@gmail.com</a>
+      <a class="pill" href="https://github.com/index-oss" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="pill" href="#" data-placeholder="linkedin">LinkedIn ↗</a>
+    </div>
+    <div class="footer-bottom">Mohit Sharma — Faridabad, India</div>
+  </div>
+</footer>
+
+<script>
+  // Placeholder links: block navigation and hint what to fill in until real URLs are added
+  document.querySelectorAll('[data-placeholder]').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      var kind = el.getAttribute('data-placeholder');
+      alert('Add your ' + kind + ' link here before publishing — see the code comment near data-placeholder="' + kind + '".');
+    });
+  });
+</script>
+
+</body>
+</html>
