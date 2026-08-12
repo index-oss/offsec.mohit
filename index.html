@@ -73,6 +73,7 @@
   nav ul { list-style: none; display: flex; gap: 26px; }
 
   nav a {
+    position: relative;
     color: var(--ink-soft);
     text-decoration: none;
     font-family: 'IBM Plex Mono', monospace;
@@ -80,10 +81,35 @@
     transition: color 0.2s;
   }
 
+  nav a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 0%; height: 1px;
+    background: var(--amber);
+    transition: width 0.25s ease;
+  }
+
   nav a:hover, nav a:focus-visible { color: var(--amber); }
+  nav a:hover::after, nav a:focus-visible::after { width: 100%; }
 
   /* ---------- HERO ---------- */
-  .hero { padding: 84px 0 46px; }
+  .hero { padding: 84px 0 46px; position: relative; overflow: hidden; }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -10%; right: -10%;
+    width: 60%; height: 140%;
+    background:
+      repeating-linear-gradient(0deg, rgba(219,164,99,0.035) 0px, rgba(219,164,99,0.035) 1px, transparent 1px, transparent 34px),
+      repeating-linear-gradient(90deg, rgba(219,164,99,0.035) 0px, rgba(219,164,99,0.035) 1px, transparent 1px, transparent 34px);
+    mask-image: radial-gradient(ellipse at center, black 0%, transparent 72%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero .wrap-inner { position: relative; z-index: 1; }
 
   .status-line {
     font-family: 'IBM Plex Mono', monospace;
@@ -100,10 +126,700 @@
     width: 7px; height: 7px; border-radius: 50%;
     background: var(--moss);
     box-shadow: 0 0 8px var(--moss);
+    animation: pulse-dot 2.4s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 6px var(--moss); }
+    50% { box-shadow: 0 0 14px var(--moss); }
   }
 
   .hero h1 {
     font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.3rem, 5.6vw, 3.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+    max-width: 760px;
+  }
+
+  .hero h1 em {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--amber);
+  }
+
+  .hero-sub {
+    font-size: 1.06rem;
+    color: var(--ink-soft);
+    max-width: 560px;
+    margin-bottom: 34px;
+  }
+
+  .hero-sub strong { color: var(--ink); font-weight: 600; }
+
+  .hero-links { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 46px; }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 18px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 500;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    transition: all 0.2s ease;
+  }
+
+  .pill.fill { background: var(--amber); border-color: var(--amber); color: #0a0c0e; font-weight: 600; }
+  .pill:hover { border-color: var(--amber); color: var(--amber); transform: translateY(-1px); }
+  .pill.fill:hover { color: #0a0c0e; opacity: 0.9; }
+
+  /* ---------- CONSOLE (signature element) ---------- */
+  .console {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .console-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface-2);
+  }
+
+  .console-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--ink-dim); }
+
+  .console-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ink-dim);
+    margin-left: 6px;
+  }
+
+  .console-body {
+    padding: 16px 18px 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    min-height: 118px;
+  }
+
+  .console-body .line { color: var(--ink-soft); margin-bottom: 7px; opacity: 0; animation: reveal 0.4s ease forwards; }
+  .console-body .line .ok { color: var(--moss); }
+  .console-body .line .tag { color: var(--amber); }
+  .console-body .line:nth-child(1) { animation-delay: 0.1s; }
+  .console-body .line:nth-child(2) { animation-delay: 0.5s; }
+  .console-body .line:nth-child(3) { animation-delay: 0.9s; }
+  .console-body .line:nth-child(4) { animation-delay: 1.3s; }
+  .console-body .line:nth-child(5) { animation-delay: 1.7s; }
+
+  @keyframes reveal { to { opacity: 1; } }
+
+  /* ---------- SECTION GENERIC ---------- */
+  section.block { padding: 60px 0; border-top: 1px solid var(--line); }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--ink-dim);
+    margin-bottom: 8px;
+  }
+
+  .section-label span { color: var(--amber); }
+
+  section.block h2 {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.7rem;
+    margin-bottom: 36px;
+  }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* ---------- PROJECTS ---------- */
+  .project {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 26px 28px;
+    margin-bottom: 16px;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  }
+
+  .project:hover {
+    border-color: #3a4247;
+    box-shadow: 0 0 0 1px rgba(219,164,99,0.12), 0 14px 30px -18px rgba(0,0,0,0.7);
+    transform: translateY(-2px);
+  }
+
+  .project-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .project h3 { font-size: 1.12rem; font-weight: 600; }
+
+  .project-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--moss);
+    border: 1px solid #2a3630;
+    padding: 4px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .project p { color: var(--ink-soft); font-size: 0.93rem; margin-bottom: 16px; max-width: 600px; }
+
+  .stack-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+
+  .stack-chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ink-dim);
+    border: 1px solid var(--line);
+    padding: 3px 9px;
+    border-radius: 3px;
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--amber);
+    text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 0.82rem;
+    border-bottom: 1px solid transparent;
+  }
+
+  .project-link:hover { border-color: var(--amber); }
+
+  .project-note {
+    font-size: 0.82rem;
+    color: var(--ink-dim);
+    border-top: 1px dashed var(--line);
+    margin-top: 4px;
+    padding-top: 12px;
+  }
+
+  .more-row { text-align: center; margin-top: 22px; }
+
+  /* ---------- WHY ME (signature: redacted dossier / decrypt) ---------- */
+  .dossier {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .dossier-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface-2);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ink-dim);
+  }
+
+  .dossier-bar .clearance {
+    color: var(--amber);
+    letter-spacing: 0.06em;
+  }
+
+  .dossier-body { padding: 28px 30px 32px; }
+
+  .dossier-row {
+    display: flex;
+    gap: 18px;
+    padding: 16px 0;
+    border-bottom: 1px dashed var(--line);
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+
+  .dossier-row:last-child { border-bottom: none; }
+
+  .dossier-q {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.74rem;
+    color: var(--ink-dim);
+    min-width: 92px;
+  }
+
+  .dossier-a {
+    font-size: 1rem;
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.01em;
+  }
+
+  .dossier-a .redacted-char {
+    color: #55504a;
+  }
+
+  .dossier-a .decrypted {
+    color: var(--ink);
+  }
+
+  .dossier-a.done .decrypted.amber { color: var(--amber); }
+  .dossier-a.done .decrypted.moss { color: var(--moss); }
+
+  /* ---------- SKILLS ---------- */
+  .skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+
+  .skill-group h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--amber);
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  .skill-group ul { list-style: none; }
+
+  .skill-group li {
+    color: var(--ink-soft);
+    font-size: 0.93rem;
+    padding: 5px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  .skill-group li:last-child { border-bottom: none; }
+
+  /* ---------- EDUCATION ---------- */
+  .edu-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 28px;
+  }
+
+  .edu-card h3 { font-size: 1.08rem; font-weight: 600; margin-bottom: 4px; }
+  .edu-card .org { color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 4px; }
+  .edu-card .dates { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--ink-dim); }
+
+  /* ---------- FOOTER / CONTACT ---------- */
+  footer { padding: 70px 0 50px; border-top: 1px solid var(--line); }
+
+  footer h2 {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.8rem, 4.4vw, 2.6rem);
+    margin-bottom: 16px;
+  }
+
+  footer h2 em { color: var(--amber); }
+
+  footer p { color: var(--ink-soft); margin-bottom: 30px; max-width: 480px; }
+
+  .footer-links { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 50px; }
+
+  .footer-bottom {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    color: var(--ink-dim);
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 680px) {
+    .skill-grid { grid-template-columns: 1fr; }
+    nav ul { gap: 14px; }
+    nav a { font-size: 0.74rem; }
+    .dossier-row { flex-direction: column; gap: 6px; }
+  }
+
+  a:focus-visible, .pill:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .console-body .line { opacity: 1; animation: none; }
+    .logo .cursor { animation: none; }
+    .status-dot { animation: none; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .project { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-inner">
+    <div class="logo">mohit.sh<span class="cursor"></span></div>
+    <nav>
+      <ul>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#why">Why me</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap wrap-inner">
+      <div class="status-line"><span class="status-dot"></span>final-year b.tech · open to sde &amp; security roles</div>
+      <h1>I build systems, then I <em>try to break them</em> before someone else does.</h1>
+      <p class="hero-sub">
+        Mohit Sharma — full-stack developer with a focus on offensive security. I ship
+        working products end to end and spend the rest of my time figuring out how
+        software fails, so the things I build don't.
+      </p>
+      <div class="hero-links">
+        <a class="pill fill" href="https://github.com/index-oss" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="pill" href="mailto:infosec.mohitsharma@gmail.com">Email me</a>
+        <a class="pill" href="#" data-placeholder="linkedin">LinkedIn ↗</a>
+        <a class="pill" href="#" data-placeholder="resume">Resume (PDF) ↓</a>
+      </div>
+
+      <div class="console">
+        <div class="console-bar">
+          <span class="console-dot"></span><span class="console-dot"></span><span class="console-dot"></span>
+          <span class="console-title">~/mohit — status</span>
+        </div>
+        <div class="console-body">
+          <div class="line"><span class="tag">[build]</span> full-stack apps, shipped and running</div>
+          <div class="line"><span class="ok">[ok]</span> log monitoring &amp; auto-recovery agent — live</div>
+          <div class="line"><span class="tag">[recon]</span> bug-hunting pipeline — recon → exploit → report</div>
+          <div class="line"><span class="ok">[ok]</span> AI-assisted tools shipped for real users, not demos</div>
+          <div class="line"><span class="tag">[status]</span> currently: final year, JC Bose University (YMCA)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block wrap" id="work">
+    <div class="section-label reveal"><span>//</span> selected work</div>
+    <h2 class="reveal">What I've shipped</h2>
+
+    <div class="project reveal">
+      <div class="project-top">
+        <h3>Self-Heal-AI</h3>
+        <span class="project-tag">security · automation</span>
+      </div>
+      <p>
+        An AI-assisted self-healing agent for servers — watches logs, flags anomalies,
+        blocks malicious IPs automatically, restarts failed services, and alerts over
+        Telegram/Discord. Built to close the gap between "detected" and "fixed."
+      </p>
+      <div class="stack-row">
+        <span class="stack-chip">Python</span>
+        <span class="stack-chip">Log analysis</span>
+        <span class="stack-chip">Automation</span>
+      </div>
+      <a class="project-link" href="https://github.com/index-oss/Self-Heal-Ai" target="_blank" rel="noopener">View on GitHub →</a>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-top">
+        <h3>Vulnerability Scanner</h3>
+        <span class="project-tag">offensive security</span>
+      </div>
+      <p>
+        A scanner built to identify common exploitable weaknesses in target
+        applications — misconfigurations, exposed endpoints, and known
+        vulnerability signatures — with results structured for direct use in a report.
+      </p>
+      <div class="stack-row">
+        <span class="stack-chip">Python</span>
+        <span class="stack-chip">Vulnerability detection</span>
+        <span class="stack-chip">Reporting</span>
+      </div>
+      <a class="project-link" href="#" data-placeholder="vuln-scanner repo">View on GitHub →</a>
+      <div class="project-note">Built and tested against authorized targets only.</div>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-top">
+        <h3>Exbow-Offensive</h3>
+        <span class="project-tag">offensive security research</span>
+      </div>
+      <p>
+        A recon-to-report automation pipeline for ethical hacking workflows —
+        reconnaissance, analysis, and exploitation testing against consenting,
+        authorized targets, with structured reporting for write-ups and CTFs.
+      </p>
+      <div class="stack-row">
+        <span class="stack-chip">Python</span>
+        <span class="stack-chip">Recon automation</span>
+        <span class="stack-chip">Reporting</span>
+      </div>
+      <a class="project-link" href="https://github.com/index-oss/Exbow-Offensive" target="_blank" rel="noopener">View on GitHub →</a>
+      <div class="project-note">Built for authorized testing and CTF environments only.</div>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-top">
+        <h3>ExamCraft</h3>
+        <span class="project-tag">AI tool</span>
+      </div>
+      <p>
+        A marks-aware answer sheet generator for university students — reads a question
+        paper, scales responses to the marks allotted, walks through maths step by step,
+        and exports a properly formatted A4 PDF. Single-file, no backend required.
+      </p>
+      <div class="stack-row">
+        <span class="stack-chip">Tailwind CSS</span>
+        <span class="stack-chip">PDF.js / jsPDF</span>
+        <span class="stack-chip">Tesseract.js</span>
+        <span class="stack-chip">GPT-4o-mini</span>
+      </div>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-top">
+        <h3>Quiz-Master Pro</h3>
+        <span class="project-tag">real-time · multiplayer</span>
+      </div>
+      <p>
+        A multiplayer quiz game with a live leaderboard, AI-generated explanations for
+        wrong answers, and gamified badges to keep people coming back.
+      </p>
+      <div class="stack-row">
+        <span class="stack-chip">React</span>
+        <span class="stack-chip">Supabase</span>
+        <span class="stack-chip">Realtime</span>
+      </div>
+      <a class="project-link" href="https://github.com/index-oss/Quiz-Master_Pro" target="_blank" rel="noopener">View on GitHub →</a>
+    </div>
+
+    <div class="more-row reveal">
+      <a class="pill" href="https://github.com/index-oss" target="_blank" rel="noopener">See everything else on GitHub ↗</a>
+    </div>
+  </section>
+
+  <section class="block wrap" id="writeups">
+    <div class="section-label reveal"><span>//</span> writeups</div>
+    <h2 class="reveal">How I got in</h2>
+
+    <div class="project reveal">
+      <div class="project-top">
+        <h3>Vulnerability Scanner — findings writeup</h3>
+        <span class="project-tag">CTF / disclosure style</span>
+      </div>
+      <p>
+        Full breakdown of how the target's weak point was found, how it was
+        confirmed and exploited under authorization, and what fixed it —
+        written the way a real disclosure report reads, not a diary.
+      </p>
+      <a class="project-link" href="#" data-placeholder="writeup link">Read the writeup →</a>
+    </div>
+  </section>
+
+  <section class="block wrap" id="why">
+    <div class="section-label reveal"><span>//</span> classified · clearance required</div>
+    <h2 class="reveal">Why me?</h2>
+
+    <div class="dossier reveal">
+      <div class="dossier-bar">
+        <span>FILE: why-me.dossier</span>
+        <span class="clearance">[DECRYPTING ON VIEW]</span>
+      </div>
+      <div class="dossier-body">
+        <div class="dossier-row">
+          <span class="dossier-q">// skill</span>
+          <span class="dossier-a" data-text="Not the loudest in the room, but the one who finds what everyone else missed." data-tone="amber"></span>
+        </div>
+        <div class="dossier-row">
+          <span class="dossier-q">// method</span>
+          <span class="dossier-a" data-text="I don't memorize solutions. I break things until I understand why they broke." data-tone="moss"></span>
+        </div>
+        <div class="dossier-row">
+          <span class="dossier-q">// standard</span>
+          <span class="dossier-a" data-text="Half-finished work doesn't leave my machine. Shipped means it actually runs." data-tone="amber"></span>
+        </div>
+        <div class="dossier-row">
+          <span class="dossier-q">// proof</span>
+          <span class="dossier-a" data-text="Every claim on this page has a repo behind it. Check it yourself." data-tone="moss"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block wrap" id="skills">
+    <div class="section-label reveal"><span>//</span> stack</div>
+    <h2 class="reveal">What I work with</h2>
+    <div class="skill-grid reveal">
+      <div class="skill-group">
+        <h4>LANGUAGES</h4>
+        <ul>
+          <li>Python</li>
+          <li>C</li>
+          <li>JavaScript</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>WEB &amp; TOOLS</h4>
+        <ul>
+          <li>Tailwind CSS · React</li>
+          <li>Supabase</li>
+          <li>Git / GitHub</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>SECURITY</h4>
+        <ul>
+          <li>Recon &amp; enumeration automation</li>
+          <li>Vulnerability scanning &amp; reporting</li>
+          <li>Log-based anomaly detection</li>
+          <li>CTF-style exploitation practice</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>AI / ML APPLIED</h4>
+        <ul>
+          <li>LLM-integrated tooling (GPT-4o family)</li>
+          <li>OCR &amp; document pipelines</li>
+          <li>Practical, product-shaped AI features</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block wrap" id="education">
+    <div class="section-label reveal"><span>//</span> education</div>
+    <h2 class="reveal">Background</h2>
+    <div class="edu-card reveal">
+      <h3>B.Tech, Computer Engineering</h3>
+      <div class="org">JC Bose University of Science &amp; Technology (YMCA), Faridabad</div>
+      <div class="dates">Final year</div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2 class="reveal">Let's talk about <em>what you're building.</em></h2>
+    <p class="reveal">Open to SDE and security-focused roles — full-stack, backend, or offensive security.</p>
+    <div class="footer-links reveal">
+      <a class="pill fill" href="mailto:infosec.mohitsharma@gmail.com">infosec.mohitsharma@gmail.com</a>
+      <a class="pill" href="https://github.com/index-oss" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="pill" href="#" data-placeholder="linkedin">LinkedIn ↗</a>
+    </div>
+    <div class="footer-bottom">Mohit Sharma — Faridabad, India</div>
+  </div>
+</footer>
+
+<script>
+  // Placeholder links: block navigation and hint what to fill in until real URLs are added
+  document.querySelectorAll('[data-placeholder]').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      var kind = el.getAttribute('data-placeholder');
+      alert('Add your ' + kind + ' link here before publishing — see the code comment near data-placeholder="' + kind + '".');
+    });
+  });
+
+  // Scroll reveal
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var revealEls = document.querySelectorAll('.reveal');
+  if (reduceMotion) {
+    revealEls.forEach(function (el) { el.classList.add('in'); });
+  } else if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  // Decrypt / redact effect for the "Why me" dossier
+  var SCRAMBLE_CHARS = '!<>-_\\/[]{}—=+*^?#0123456789';
+
+  function decryptText(el, finalText, tone) {
+    var frame = 0;
+    var revealCount = 0;
+    var totalFrames = 26;
+    var interval = setInterval(function () {
+      var out = '';
+      var revealUpTo = Math.floor((frame / totalFrames) * finalText.length);
+      for (var i = 0; i < finalText.length; i++) {
+        if (i < revealUpTo) {
+          out += '<span class="decrypted ' + tone + '">' + finalText[i] + '</span>';
+        } else if (finalText[i] === ' ') {
+          out += ' ';
+        } else {
+          out += '<span class="redacted-char">' + SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)] + '</span>';
+        }
+      }
+      el.innerHTML = out;
+      frame++;
+      if (frame > totalFrames) {
+        clearInterval(interval);
+        el.innerHTML = '<span class="decrypted ' + tone + '">' + finalText + '</span>';
+        el.classList.add('done');
+      }
+    }, 28);
+  }
+
+  var dossierEls = document.querySelectorAll('.dossier-a');
+  if (reduceMotion) {
+    dossierEls.forEach(function (el) {
+      el.textContent = el.getAttribute('data-text');
+      el.classList.add('done');
+    });
+  } else if ('IntersectionObserver' in window) {
+    var dio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry, idx) {
+        if (entry.isIntersecting) {
+          var el = entry.target;
+          var text = el.getAttribute('data-text');
+          var tone = el.getAttribute('data-tone') || 'amber';
+          var delay = Array.prototype.indexOf.call(dossierEls, el) * 180;
+          setTimeout(function () { decryptText(el, text, tone); }, delay);
+          dio.unobserve(el);
+        }
+      });
+    }, { threshold: 0.3 });
+    dossierEls.forEach(function (el) { dio.observe(el); });
+  } else {
+    dossierEls.forEach(function (el) {
+      el.textContent = el.getAttribute('data-text');
+      el.classList.add('done');
+    });
+  }
+</script>
+
+</body>
+</html>
     font-weight: 700;
     font-size: clamp(2.3rem, 5.6vw, 3.5rem);
     line-height: 1.08;
